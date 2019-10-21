@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1571263508 source:c:\users\pedro\desktop\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Map.h"
+	<ctype.h>
+
+1569938752 c:\users\pedro\desktop\map.h
+
+1569938750 source:c:\users\pedro\desktop\map.c
+	"Map.h"
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	<stdint.h>
+	<assert.h>
+
+1571592570 source:c:\users\pedro\desktop\tarea2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Map.h"
+	<ctype.h>
+
+1569938752 c:\users\pedro\desktop\tarea2\map.h
+
+1569938750 source:c:\users\pedro\desktop\tarea2\map.c
+	"Map.h"
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	<stdint.h>
+	<assert.h>
+
