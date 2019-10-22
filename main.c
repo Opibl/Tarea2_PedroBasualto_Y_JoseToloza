@@ -115,12 +115,12 @@ void ingresar_musica(Map *mapa_canciones,Map* Mapa_album, Map* mapa_artistas)
 
         cancion *m = crear_cancion (nombre,artista,duracion,album,fechaL); //se crea la cancion
 
-        if (searchMap(mapa_canciones, m->nombre) == NULL) // se ingresa la cancion al mapa_canciones con su clave nombre
+        if (!searchMap(mapa_canciones, m->nombre)) // se ingresa la cancion al mapa_canciones con su clave nombre
         {
             insertMap(mapa_canciones, m->nombre, m);
 
         }
-        if (searchMap(mapa_artistas, m->artista) == NULL) //se ingresa al mapa_artistas con clave artista  y su valor es un mapa con cancions de un artista
+        if (!searchMap(mapa_artistas, m->artista)) //se ingresa al mapa_artistas con clave artista  y su valor es un mapa con cancions de un artista
         {
             Map * mapa_canciones_aux = createMap(stringHash, stringEqual);
             insertMap(mapa_canciones_aux, m->nombre, m);
@@ -131,16 +131,18 @@ void ingresar_musica(Map *mapa_canciones,Map* Mapa_album, Map* mapa_artistas)
             insertMap(searchMap(mapa_artistas, m->artista), m->nombre, m);
         }
 
-        if (searchMap(Mapa_album, m->album) == NULL) // se ingresa al mapa_album con clave album y contiene las canciones de un album
+        if(!searchMap(Mapa_album, m->album)) //se ingresa al mapa album
         {
-            Map * mapa_canciones_aux1 = createMap(stringHash, stringEqual);
-            insertMap(mapa_canciones_aux1, m->nombre, m);
-            insertMap(Mapa_album, m->album, mapa_canciones_aux1);
+            Map * mapa_canciones_aux = createMap(stringHash, stringEqual);
+            insertMap(mapa_canciones_aux, m->nombre, m);
+            insertMap(Mapa_album, m->album,mapa_canciones_aux);
         }
         else
         {
-            insertMap(searchMap(Mapa_album, m->album), m->album, m);
+            Map * mapa_canciones_aux = searchMap(Mapa_album, m->album);
+            insertMap(mapa_canciones_aux, m->nombre, m);
         }
+
     }
 
 
@@ -189,15 +191,16 @@ void agregar_album(Map* Mapa_album,Map* mapa_canciones)
         m = crear_cancion(nombre,artista,duracion,album,fechaL);
         insertMap(mapa_canciones,nombre,m);
 
-        if (searchMap(Mapa_album, m->album) == NULL) // se insertan en el mapa album
+        if(!searchMap(Mapa_album, m->album))
         {
-            Map * mapa_canciones_aux1 = createMap(stringHash, stringEqual);
-            insertMap(mapa_canciones_aux1, m->nombre, m);
-            insertMap(Mapa_album, m->album, mapa_canciones_aux1);
+            Map * mapa_canciones_aux = createMap(stringHash, stringEqual);
+            insertMap(mapa_canciones_aux, m->nombre, m);
+            insertMap(Mapa_album, m->album,mapa_canciones_aux);
         }
         else
         {
-            insertMap(searchMap(Mapa_album, m->album), m->album, m);
+            Map * mapa_canciones_aux = searchMap(Mapa_album, m->album);
+            insertMap(mapa_canciones_aux, m->nombre, m);
         }
 
 
