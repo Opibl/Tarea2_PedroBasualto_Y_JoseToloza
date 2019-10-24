@@ -168,17 +168,25 @@ void exportar_musica(Map *mapa_canciones)
 */
 void agregar_album(Map* Mapa_album,Map* mapa_canciones)
 {
-    char nombre[100];
-    char artista[100];
-    char duracion[100];
-    char album[100];
-    char fechaL[100];
+    char *album;
     cancion *m;
     char opcion[100];
+
+    album = (char*) malloc(sizeof(char));
     printf("ingrese el album que desea crear\n"); // lee un album
     scanf("%s",album);
     while(1)
     {
+        char *nombre;
+        char *artista;
+        char *duracion;
+        char *fechaL;
+
+        nombre = (char*) malloc(sizeof(char));
+        artista = (char*) malloc(sizeof(char));
+        duracion = (char*) malloc(sizeof(char));
+        fechaL = (char*) malloc(sizeof(char));
+
         printf("ingrese las canciones // "); // se crean canciones
         printf("ingresar el nombre: ");
         scanf("%s",nombre);
@@ -220,14 +228,20 @@ void agregar_album(Map* Mapa_album,Map* mapa_canciones)
 /*
     se agrega una nueva cancion
 */
-void agregar_cancion(Map *mapa_canciones)
+void agregar_cancion(Map *mapa_canciones,Map *Mapa_album)
 {
-    char nombre[100];
-    char artista[100];
-    char duracion[100];
-    char album[100];
-    char fechaL[100];
+    char *nombre;
+    char *artista;
+    char *duracion;
+    char *album;
+    char *fechaL;
     cancion *m;
+
+    nombre = (char*) malloc(sizeof(char));
+    artista = (char*) malloc(sizeof(char));
+    duracion = (char*) malloc(sizeof(char));
+    album = (char*) malloc(sizeof(char));
+    fechaL = (char*) malloc(sizeof(char));
 
     printf("ingresar el nombre\n");
     getchar();
@@ -238,13 +252,24 @@ void agregar_cancion(Map *mapa_canciones)
     printf("ingresar la duracion\n");
     getchar();
     scanf("%[^\n]s",duracion);
-    printf("ingesar album\n");
-    getchar();
-    scanf("%[^\n]s",album);
-    printf("ingresar fecha de lanzamiento");
-    scanf("%[^\n]s",fechaL);
+
+    strcpy(fechaL,"0");
+    strcpy(album,"-");
+
     m = crear_cancion(nombre,artista,duracion,album,fechaL);
     insertMap(mapa_canciones,nombre,m);
+
+    if(!searchMap(Mapa_album, m->album))
+    {
+        Map * mapa_canciones_aux = createMap(stringHash, stringEqual);
+        insertMap(mapa_canciones_aux, m->nombre, m);
+        insertMap(Mapa_album, m->album,mapa_canciones_aux);
+    }
+    else
+    {
+        Map * mapa_canciones_aux = searchMap(Mapa_album, m->album);
+        insertMap(mapa_canciones_aux, m->nombre, m);
+    }
 
 }
 //5
@@ -402,7 +427,7 @@ do
 
     if(op == 4)
     {
-        agregar_cancion(mapa_canciones);
+        agregar_cancion(mapa_canciones,Mapa_album);
         printf("\n");
     }
 
